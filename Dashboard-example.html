@@ -146,12 +146,7 @@
         buttonsDiv.style.display = 'flex';
         buttonsDiv.style.gap = '0.5rem';
         buttonsDiv.style.alignItems = 'center';
-
-        // Namen ändern Button
-        const changeBtn = document.createElement('button');
-        changeBtn.className = 'change-btn';
-        changeBtn.textContent = 'Namen ändern';
-
+        
         changeBtn.addEventListener('click', () => {
           // Falls Eingabe schon offen, nichts tun
           if (div.querySelector('input')) return;
