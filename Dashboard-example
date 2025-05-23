@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EUNet ID Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #f5f7fa;
+      color: #111;
+    }
+    header {
+      background-color: #0056d2;
+      color: white;
+      padding: 1.5rem 2rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 700;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    section {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      color: #0056d2;
+      margin-top: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background: #e6f0ff;
+    }
+    button {
+      background: #0056d2;
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background: #003d99;
+    }
+    .username-input {
+      width: 200px;
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-right: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .flex-row {
+      display: flex;
+      align-items: center;
+      margin-top: 1rem;
+    }
+    .notice {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EUNet ID Dashboard</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Profilverwaltung</h2>
+      <label for="username">Nutzername bearbeiten:</label>
+      <div class="flex-row">
+        <input id="username" class="username-input" type="text" value="Fabian123" />
+        <button onclick="saveUsername()">Speichern</button>
+      </div>
+      <p class="notice" id="usernameNotice"></p>
+    </section>
+
+    <section>
+      <h2>Verbundene Plattformen</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Plattform</th>
+            <th>Nutzername</th>
+            <th>Zugriffsrechte</th>
+            <th>Aktion</th>
+          </tr>
+        </thead>
+        <tbody id="platformTableBody">
+          <tr>
+            <td>EUNet Chat</td>
+            <td>fabian_coder</td>
+            <td>Lesen, Schreiben</td>
+            <td><button onclick="removePlatform(this)">Entfernen</button></td>
+          </tr>
+          <tr>
+            <td>EUNet Pay</td>
+            <td>fabian_pay</td>
+            <td>Lesen</td>
+            <td><button onclick="removePlatform(this)">Entfernen</button></td>
+          </tr>
+          <tr>
+            <td>EUNet Cloud</td>
+            <td>fabian.cloud</td>
+            <td>Lesen, Schreiben, Löschen</td>
+            <td><button onclick="removePlatform(this)">Entfernen</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    function saveUsername() {
+      const input = document.getElementById('username');
+      const notice = document.getElementById('usernameNotice');
+      const newName = input.value.trim();
+
+      if (newName.length < 3) {
+        notice.textContent = 'Der Nutzername muss mindestens 3 Zeichen haben.';
+        notice.style.color = 'red';
+        return;
+      }
+
+      // Hier würde normalerweise ein API-Call zum Server erfolgen
+
+      notice.textContent = 'Nutzername wurde gespeichert!';
+      notice.style.color = 'green';
+
+      setTimeout(() => {
+        notice.textContent = '';
+      }, 3000);
+    }
+
+    function removePlatform(button) {
+      if (confirm('Möchtest du diese Plattform wirklich entfernen?')) {
+        const row = button.closest('tr');
+        row.remove();
+      }
+    }
+  </script>
+</body>
+</html>
