@@ -37,6 +37,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 1rem;
     }
     .platform-info {
       flex-grow: 1;
@@ -50,7 +51,8 @@
       font-size: 0.95rem;
       color: #555;
     }
-    button.change-btn {
+    button.change-btn,
+    button.remove-btn {
       background-color: #0046b8;
       color: white;
       border: none;
@@ -63,6 +65,12 @@
     }
     button.change-btn:hover {
       background-color: #002f70;
+    }
+    button.remove-btn {
+      background-color: #c82333;
+    }
+    button.remove-btn:hover {
+      background-color: #7a131a;
     }
     input.edit-input {
       font-size: 1rem;
@@ -86,6 +94,10 @@
     button.save-btn:hover {
       background-color: #1e7e34;
     }
+    .edit-controls {
+      display: flex;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -97,8 +109,7 @@
   </div>
 
   <script>
-    // Beispiel-Plattformen mit zufälligen Usernamen
-    const platforms = [
+    let platforms = [
       { name: 'InstaGram', username: 'max_insta123' },
       { name: 'PayPal', username: 'max.paypal' },
       { name: 'WhatsApp', username: 'maxwhatsapp' },
@@ -109,72 +120,93 @@
 
     const container = document.getElementById('platforms-container');
 
-    function createPlatformElement(platform, index) {
-      const div = document.createElement('div');
-      div.className = 'platform';
+    function renderPlatforms() {
+      container.innerHTML = ''; // Container leeren
 
-      const infoDiv = document.createElement('div');
-      infoDiv.className = 'platform-info';
+      platforms.forEach((platform, index) => {
+        const div = document.createElement('div');
+        div.className = 'platform';
 
-      const platformName = document.createElement('div');
-      platformName.className = 'platform-name';
-      platformName.textContent = platform.name;
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'platform-info';
 
-      const usernameDisplay = document.createElement('div');
-      usernameDisplay.className = 'username-display';
-      usernameDisplay.textContent = `Nutzername: ${platform.username}`;
+        const platformName = document.createElement('div');
+        platformName.className = 'platform-name';
+        platformName.textContent = platform.name;
 
-      infoDiv.appendChild(platformName);
-      infoDiv.appendChild(usernameDisplay);
+        const usernameDisplay = document.createElement('div');
+        usernameDisplay.className = 'username-display';
+        usernameDisplay.textContent = `Nutzername: ${platform.username}`;
 
-      const changeBtn = document.createElement('button');
-      changeBtn.className = 'change-btn';
-      changeBtn.textContent = 'Namen ändern';
+        infoDiv.appendChild(platformName);
+        infoDiv.appendChild(usernameDisplay);
 
-      changeBtn.addEventListener('click', () => {
-        // Wenn Eingabefeld schon offen, nicht nochmal öffnen
-        if (div.querySelector('input')) return;
+        // Buttons Container
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.style.display = 'flex';
+        buttonsDiv.style.gap = '0.5rem';
+        buttonsDiv.style.alignItems = 'center';
 
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = platform.username;
-        input.className = 'edit-input';
+        // Namen ändern Button
+        const changeBtn = document.createElement('button');
+        changeBtn.className = 'change-btn';
+        changeBtn.textContent = 'Namen ändern';
 
-        const saveBtn = document.createElement('button');
-        saveBtn.className = 'save-btn';
-        saveBtn.textContent = 'Speichern';
+        changeBtn.addEventListener('click', () => {
+          // Falls Eingabe schon offen, nichts tun
+          if (div.querySelector('input')) return;
 
-        // Wenn gespeichert wird, Username ändern und UI aktualisieren
-        saveBtn.addEventListener('click', () => {
-          const newName = input.value.trim();
-          if (newName.length === 0) {
-            alert('Der Nutzername darf nicht leer sein.');
-            return;
-          }
-          platform.username = newName;
-          usernameDisplay.textContent = `Nutzername: ${platform.username}`;
-          input.remove();
-          saveBtn.remove();
-          changeBtn.style.display = 'inline-block';
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = platform.username;
+          input.className = 'edit-input';
+
+          const saveBtn = document.createElement('button');
+          saveBtn.className = 'save-btn';
+          saveBtn.textContent = 'Speichern';
+
+          saveBtn.addEventListener('click', () => {
+            const newName = input.value.trim();
+            if (newName.length === 0) {
+              alert('Der Nutzername darf nicht leer sein.');
+              return;
+            }
+            platform.username = newName;
+            usernameDisplay.textContent = `Nutzername: ${platform.username}`;
+            input.remove();
+            saveBtn.remove();
+            changeBtn.style.display = 'inline-block';
+          });
+
+          changeBtn.style.display = 'none';
+          buttonsDiv.insertBefore(input, saveBtn);
+          buttonsDiv.insertBefore(saveBtn, changeBtn.nextSibling);
+          input.focus();
         });
 
-        // UI umstellen: Button ausblenden, Input + Speichern anzeigen
-        changeBtn.style.display = 'none';
-        div.appendChild(input);
-        div.appendChild(saveBtn);
-        input.focus();
+        // Verknüpfung entfernen Button
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-btn';
+        removeBtn.textContent = 'Verknüpfung entfernen';
+
+        removeBtn.addEventListener('click', () => {
+          if (confirm(`Verknüpfung mit ${platform.name} wirklich entfernen?`)) {
+            platforms.splice(index, 1);
+            renderPlatforms();
+          }
+        });
+
+        buttonsDiv.appendChild(changeBtn);
+        buttonsDiv.appendChild(removeBtn);
+
+        div.appendChild(infoDiv);
+        div.appendChild(buttonsDiv);
+
+        container.appendChild(div);
       });
-
-      div.appendChild(infoDiv);
-      div.appendChild(changeBtn);
-
-      return div;
     }
 
-    // Plattformen rendern
-    platforms.forEach((platform, i) => {
-      container.appendChild(createPlatformElement(platform, i));
-    });
+    renderPlatforms();
   </script>
 </body>
 </html>
