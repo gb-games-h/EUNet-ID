@@ -3,165 +3,178 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EUNet ID Dashboard</title>
+  <title>EUNet ID - Dashboard</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      background: #f5f7fa;
+      background: #e6f0ff;
       color: #111;
+      padding: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    header {
-      background-color: #0056d2;
-      color: white;
-      padding: 1.5rem 2rem;
+    h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #0046b8;
       text-align: center;
     }
-    header h1 {
-      margin: 0;
-      font-weight: 700;
+    .account-name {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #333;
     }
-    main {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-    }
-    section {
+    .platform {
       background: white;
       border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    h2 {
-      color: #0056d2;
-      margin-top: 0;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    th, td {
-      padding: 0.75rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-    th {
-      background: #e6f0ff;
-    }
-    button {
-      background: #0056d2;
-      color: white;
-      border: none;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background: #003d99;
-    }
-    .username-input {
-      width: 200px;
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin-right: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .flex-row {
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
       display: flex;
       align-items: center;
-      margin-top: 1rem;
+      justify-content: space-between;
     }
-    .notice {
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 0.5rem;
+    .platform-info {
+      flex-grow: 1;
+    }
+    .platform-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+    }
+    .username-display {
+      font-size: 0.95rem;
+      color: #555;
+    }
+    button.change-btn {
+      background-color: #0046b8;
+      color: white;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    button.change-btn:hover {
+      background-color: #002f70;
+    }
+    input.edit-input {
+      font-size: 1rem;
+      padding: 0.3rem 0.5rem;
+      border: 2px solid #0046b8;
+      border-radius: 10px;
+      margin-right: 0.5rem;
+      width: 150px;
+    }
+    button.save-btn {
+      background-color: #28a745;
+      border: none;
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    button.save-btn:hover {
+      background-color: #1e7e34;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>EUNet ID Dashboard</h1>
-  </header>
+  <h1>EUNet ID Dashboard</h1>
+  <div class="account-name">Account: <strong>Max Mustermann</strong></div>
 
-  <main>
-    <section>
-      <h2>Profilverwaltung</h2>
-      <label for="username">Nutzername bearbeiten:</label>
-      <div class="flex-row">
-        <input id="username" class="username-input" type="text" value="Fabian123" />
-        <button onclick="saveUsername()">Speichern</button>
-      </div>
-      <p class="notice" id="usernameNotice"></p>
-    </section>
-
-    <section>
-      <h2>Verbundene Plattformen</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Plattform</th>
-            <th>Nutzername</th>
-            <th>Zugriffsrechte</th>
-            <th>Aktion</th>
-          </tr>
-        </thead>
-        <tbody id="platformTableBody">
-          <tr>
-            <td>EUNet Chat</td>
-            <td>fabian_coder</td>
-            <td>Lesen, Schreiben</td>
-            <td><button onclick="removePlatform(this)">Entfernen</button></td>
-          </tr>
-          <tr>
-            <td>EUNet Pay</td>
-            <td>fabian_pay</td>
-            <td>Lesen</td>
-            <td><button onclick="removePlatform(this)">Entfernen</button></td>
-          </tr>
-          <tr>
-            <td>EUNet Cloud</td>
-            <td>fabian.cloud</td>
-            <td>Lesen, Schreiben, Löschen</td>
-            <td><button onclick="removePlatform(this)">Entfernen</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </main>
+  <div id="platforms-container">
+    <!-- Plattformen werden hier dynamisch eingefügt -->
+  </div>
 
   <script>
-    function saveUsername() {
-      const input = document.getElementById('username');
-      const notice = document.getElementById('usernameNotice');
-      const newName = input.value.trim();
+    // Beispiel-Plattformen mit zufälligen Usernamen
+    const platforms = [
+      { name: 'InstaGram', username: 'max_insta123' },
+      { name: 'PayPal', username: 'max.paypal' },
+      { name: 'WhatsApp', username: 'maxwhatsapp' },
+      { name: 'Spotify', username: 'max_spotify88' },
+      { name: 'LinkedIn', username: 'max-link' },
+      { name: 'Twitter', username: 'mustermann_tw' }
+    ];
 
-      if (newName.length < 3) {
-        notice.textContent = 'Der Nutzername muss mindestens 3 Zeichen haben.';
-        notice.style.color = 'red';
-        return;
-      }
+    const container = document.getElementById('platforms-container');
 
-      // Hier würde normalerweise ein API-Call zum Server erfolgen
+    function createPlatformElement(platform, index) {
+      const div = document.createElement('div');
+      div.className = 'platform';
 
-      notice.textContent = 'Nutzername wurde gespeichert!';
-      notice.style.color = 'green';
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'platform-info';
 
-      setTimeout(() => {
-        notice.textContent = '';
-      }, 3000);
+      const platformName = document.createElement('div');
+      platformName.className = 'platform-name';
+      platformName.textContent = platform.name;
+
+      const usernameDisplay = document.createElement('div');
+      usernameDisplay.className = 'username-display';
+      usernameDisplay.textContent = `Nutzername: ${platform.username}`;
+
+      infoDiv.appendChild(platformName);
+      infoDiv.appendChild(usernameDisplay);
+
+      const changeBtn = document.createElement('button');
+      changeBtn.className = 'change-btn';
+      changeBtn.textContent = 'Namen ändern';
+
+      changeBtn.addEventListener('click', () => {
+        // Wenn Eingabefeld schon offen, nicht nochmal öffnen
+        if (div.querySelector('input')) return;
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = platform.username;
+        input.className = 'edit-input';
+
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'save-btn';
+        saveBtn.textContent = 'Speichern';
+
+        // Wenn gespeichert wird, Username ändern und UI aktualisieren
+        saveBtn.addEventListener('click', () => {
+          const newName = input.value.trim();
+          if (newName.length === 0) {
+            alert('Der Nutzername darf nicht leer sein.');
+            return;
+          }
+          platform.username = newName;
+          usernameDisplay.textContent = `Nutzername: ${platform.username}`;
+          input.remove();
+          saveBtn.remove();
+          changeBtn.style.display = 'inline-block';
+        });
+
+        // UI umstellen: Button ausblenden, Input + Speichern anzeigen
+        changeBtn.style.display = 'none';
+        div.appendChild(input);
+        div.appendChild(saveBtn);
+        input.focus();
+      });
+
+      div.appendChild(infoDiv);
+      div.appendChild(changeBtn);
+
+      return div;
     }
 
-    function removePlatform(button) {
-      if (confirm('Möchtest du diese Plattform wirklich entfernen?')) {
-        const row = button.closest('tr');
-        row.remove();
-      }
-    }
+    // Plattformen rendern
+    platforms.forEach((platform, i) => {
+      container.appendChild(createPlatformElement(platform, i));
+    });
   </script>
 </body>
 </html>
