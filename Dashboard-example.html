@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EUNet ID - Dashboard (Concept)</title>
+  <title>EUNet ID - Dashboard</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -72,32 +72,6 @@
     button.remove-btn:hover {
       background-color: #7a131a;
     }
-    input.edit-input {
-      font-size: 1rem;
-      padding: 0.3rem 0.5rem;
-      border: 2px solid #0046b8;
-      border-radius: 10px;
-      margin-right: 0.5rem;
-      width: 150px;
-    }
-    button.save-btn {
-      background-color: #28a745;
-      border: none;
-      color: white;
-      padding: 0.4rem 1rem;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      user-select: none;
-      transition: background-color 0.3s ease;
-    }
-    button.save-btn:hover {
-      background-color: #1e7e34;
-    }
-    .edit-controls {
-      display: flex;
-      align-items: center;
-    }
   </style>
 </head>
 <body>
@@ -146,37 +120,14 @@
         buttonsDiv.style.display = 'flex';
         buttonsDiv.style.gap = '0.5rem';
         buttonsDiv.style.alignItems = 'center';
-        
+
+        // Namen ändern Button
+        const changeBtn = document.createElement('button');
+        changeBtn.className = 'change-btn';
+        changeBtn.textContent = 'Namen ändern';
+
         changeBtn.addEventListener('click', () => {
-          // Falls Eingabe schon offen, nichts tun
-          if (div.querySelector('input')) return;
-
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.value = platform.username;
-          input.className = 'edit-input';
-
-          const saveBtn = document.createElement('button');
-          saveBtn.className = 'save-btn';
-          saveBtn.textContent = 'Speichern';
-
-          saveBtn.addEventListener('click', () => {
-            const newName = input.value.trim();
-            if (newName.length === 0) {
-              alert('Der Nutzername darf nicht leer sein.');
-              return;
-            }
-            platform.username = newName;
-            usernameDisplay.textContent = `Nutzername: ${platform.username}`;
-            input.remove();
-            saveBtn.remove();
-            changeBtn.style.display = 'inline-block';
-          });
-
-          changeBtn.style.display = 'none';
-          buttonsDiv.insertBefore(input, saveBtn);
-          buttonsDiv.insertBefore(saveBtn, changeBtn.nextSibling);
-          input.focus();
+          alert('only demo');
         });
 
         // Verknüpfung entfernen Button
